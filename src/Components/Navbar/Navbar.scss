@@ -1,0 +1,32 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: black;
+    padding: 10px 20px;
+    .navbar-logo  {
+      display: flex ;
+      align-items: center;
+    }
+    .navbar-logo img {
+      height: 40px; 
+    }
+ 
+    .navbar-button {
+      background-color: yellow;
+      text-decoration: none;
+
+      color: black;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+  
+      &:hover {
+        background-color: darkorange; 
+      }
+    }
+  }
+  

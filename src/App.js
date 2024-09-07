@@ -1,24 +1,46 @@
-import logo from './logo.svg';
 import './App.css';
+import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
+import Home from './Components/Home/Home';
+import Login from './Components/login/Login';
+import Layout from './Components/Layout/Layout';
 
 function App() {
+  const [cookies] = useCookies(["token"]);
+
+  function ProtectedRoute({ children }) {
+    if (cookies.token) {
+      return children;
+    } else {
+      return <Navigate to="/login/1231" />;
+    }
+  }
+
+  const routes = createBrowserRouter([
+    {
+      path: '/',
+      element: <Layout />,
+      children: [
+        {
+          path: '',
+          element: <ProtectedRoute><Home /></ProtectedRoute>
+        },
+        {
+          path: 'home',
+          element: <ProtectedRoute><Home /></ProtectedRoute>
+        },
+        {
+          path: '/login/:uid',
+          element: <Login /> // تسجيل الدخول لا يحتاج إلى حماية أو Layout
+        }
+      ],
+    },
+  ]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <RouterProvider router={routes} />
+    </>
   );
 }
 
